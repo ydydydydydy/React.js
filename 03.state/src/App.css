@@ -1,0 +1,20 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+}
+
+.button-area{
+    margin-left: 20px;
+}
+
+.board-area{
+    display: flex;
+    justify-content: center;
+}
+
+.board-area > div {
+    margin-left: 20px;
+}

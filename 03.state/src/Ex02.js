@@ -1,52 +1,50 @@
 import React from 'react';
 import {useState} from 'react';
 
+/*
+    실습2) 랜덤 숫자 맞추는 페이지 구현
+    1. 사용자가 1~3 사이의 버튼을 클릭한다.
+    2. 랜덤 숫자를 생성한다 (1~3)
+    3. 사용자가 누른 숫자의 값과 랜덤숫자를 비교한다.
+      - 두 숫자가 일치하면 "정답입니다"
+      - 두 숫자가 일치하지 않으면 "오답입니다"
+*/
+
 const Ex02 = () => {
-  const [randInt, setRandInt] = useState(generateRandomNumber());
-  const [num, setNum] = useState(null);
-  const [result, setResult] = useState('');
 
-  function generateRandomNumber() {
-    return Math.floor(Math.random() * 3) + 1;
-  }
+  const [userNum, setUserNum] = useState(0);
+  const [computerNum, setComputerNum] = useState(0);
+  const [result, setResult] = useState("");
+  
+  const handleNum = (event) => {
+    const user = parseInt(event.target.innerText);
+    console.log(event.target.innerText);
 
-  const handleNum = (selectedNum) => {
-    setNum(selectedNum);
+    const computer = parseInt(Math.random()*3)+1;
+    console.log('랜덤숫자:', computer);
 
-    if (selectedNum === randInt) {
-      setResult('정답입니다!');
-    } else {
-      setResult('오답입니다!');
+    setUserNum(user);
+    setComputerNum(computer);
+
+    if(user === computer){
+      setResult("정답입니다");
+    }else{
+      setResult("오답입니다");
     }
 
-    // 다음 라운드를 위해 새로운 랜덤 숫자 생성
-    setRandInt(generateRandomNumber());
-  };
-
-  let card_style = {
-    border: "1px solid black",
-    display: "flex",
-    justifyContent: "space-around",
-    padding: "10px",
-  };
-
-  let button_style = {
-    padding: "10px",
-    cursor: "pointer",
-  };
+  }
 
   return (
-    <div style={card_style}>
-      <button style={button_style} onClick={() => handleNum(1)}>1</button>
-      <button style={button_style} onClick={() => handleNum(2)}>2</button>
-      <button style={button_style} onClick={() => handleNum(3)}>3</button>
-      <div>
-        <p>내가 입력한 숫자: {num}</p>
-        <p>랜덤한 숫자 : {randInt}</p>
-        <p>{result}</p>
+    <div>
+      <button onClick={handleNum}>1</button>
+      <button onClick={handleNum}>2</button>
+      <button onClick={handleNum}>3</button>
+      <p>내가 선택한 숫자:{userNum}</p>
+      <p>생성된 숫자:{computerNum}</p>
+      {/* <p>{result}</p>     */}
+      { userNum === computerNum ? <p>정답입니다😇</p>:<p>오답입니다👿</p>}
       </div>
-    </div>
-  );
-};
+  )
+}
 
 export default Ex02;
