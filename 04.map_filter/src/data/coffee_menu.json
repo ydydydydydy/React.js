@@ -1,0 +1,58 @@
+[
+    {
+      "id": 1,
+      "category": "커피",
+      "name": "아메리카노(ICE)",
+      "price": "4,100원",
+      "img":"https://img.danawa.com/prod_img/500000/609/014/img/3014609_1.jpg?1650002669098"
+    },
+    {
+      "id": 2,
+      "category": "커피",
+      "name": "아메리카노(ICE)",
+      "price": "4,100원",
+      "img":"https://img.danawa.com/prod_img/500000/609/014/img/3014609_1.jpg?1650002669098"
+    },
+    {
+      "id": 3,
+      "category": "에이드",
+      "name": "사과에이드",
+      "price": "5,200원",
+      "img":"https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/product/4993449185/B.jpg?304000000"
+    },
+    {
+      "id": 4,
+      "category": "커피",
+      "name": "아메리카노(ICE)",
+      "price": "4,100원",
+      "img":"https://img.danawa.com/prod_img/500000/609/014/img/3014609_1.jpg?1650002669098"
+    },
+    {
+      "id": 5,
+      "category": "디저트",
+      "name": "다쿠아즈",
+      "price": "1,800원",
+      "img":"https://mblogthumb-phinf.pstatic.net/MjAxOTA1MTVfMTg3/MDAxNTU3OTE0OTA0ODc5.KAp9xfTd4DTYdMXOCuW_4FjI6YJ8r9GOEMxoGeWVUPgg.3xicEIBFX_N4ah45zi0xCPyFvH1rlAPJemSWPJqFVyMg.JPEG.innocenteun/IMG_7292.JPG?type=w800"
+    },
+    {
+      "id": 6,
+      "category": "디저트",
+      "name": "마카롱",
+      "price": "2,500원",
+      "img":"https://cdn.incheontoday.com/news/photo/201911/118073_110377_567.jpg"
+    },
+    {
+      "id": 7,
+      "category": "커피",
+      "name": "아메리카노(ICE)",
+      "price": "4,100원",
+      "img":"https://img.danawa.com/prod_img/500000/609/014/img/3014609_1.jpg?1650002669098"
+    },
+    {
+      "id": 8,
+      "category": "베이커리",
+      "name": "크림빵",
+      "price": "1,800원",
+      "img":"https://img-cf.kurly.com/shop/data/goodsview/20221111/gv30000449414_1.jpg"
+    }
+  ]

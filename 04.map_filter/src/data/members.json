@@ -1,0 +1,6 @@
+[
+    { "id": "1", "name": "임명진", "task": "Front-end", "age":25 },
+    { "id": "2", "name": "양세영", "task": "Back-end", "age":22 },
+    { "id": "3", "name": "박원호", "task": "Python", "age":30 },
+    { "id": "4", "name": "임보미", "task": "IoT", "age":21 }
+]
