@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 const MenuNav = ({onClick}) => {
 
     let navItems = ['All', '커피', '디저트', '에이드', '베이커리'];
-
   return (
     <Nav className='justify-content-center' activeKey="/home">
       {navItems.map((item, index) => (
