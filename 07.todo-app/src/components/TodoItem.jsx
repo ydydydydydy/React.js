@@ -30,42 +30,43 @@ const TodoItem = ({ todo }) => {
     let updateList = todos.map((item) => ({
       ...item,
       content: todo.id === item.id ? newContent : item.content,
-    }));
+    }))
 
     setTodos(updateList);
     setEdited(false);
-  };
+  }
+
+  // 할 일 삭제 기능
+  const contentDelete = (id) => {
+    if(window.confirm('정말 삭제하시겠습니까?')){
+      console.log(id);
+      let updateList = todos.filter((item)=> item.id !== id)
+      setTodos(updateList)
+    }
+  }
 
   return (
     <li className="todo-item">
-      {todo.complete ? (
-        <FaCheckCircle
-          style={{ color: "green" }}
-          className="todo-item-checkbox"
-          onClick={completeChange}
-        />
-      ) : (
-        <FaRegCircle className="todo-item-checkbox" onClick={completeChange} />
-      )}
+      {todo.complete ?
+      (<FaCheckCircle style={{ color: "green" }} className="todo-item-checkbox" onClick={completeChange} />) 
+      : 
+      (<FaRegCircle className='todo-item-checkbox' onClick={completeChange} />)}
 
       {/* edited값에 따라 서로 다른 HTML 요소 출력하기 */}
-      {edited ? (
-        <input
-          type="text"
-          value={newContent}
-          onChange={(e) => setNewContent(e.target.value)}
-        />
-      ) : (
-        <span className="todo-item-content">{todo.content}</span>
-      )}
+      {edited ?
+      (<input type='text' className='todo-item-edit-input' value={newContent} onChange={(e) => setNewContent(e.target.value)}/>) 
+      :
+      (<span className={`todo-item-content ${todo.complete?'todo-item-content-checked':''}`}>{todo.content}</span>)}
 
-      <button className="todo-item-submit-btn" onClick={contentUpdate}>
-        ✔
-      </button>
-      <button className="todo-item-edit-btn" onClick={editedChange}>
-        ✏
-      </button>
-      <button className="todo-item-delete-btn">🗑</button>
+      {/* edited값에 따라 서로 다른 버튼 출력하기 */}
+      {edited?
+      (<button className='todo-item-submit-btn' onClick={contentUpdate}>✔</button>)
+      :
+      (<button className='todo-item-edit-btn' onClick={editedChange}>✏</button>)
+      }
+
+      {/* 인자값을 함수에 넘겨줘야 할 경우 이벤트 호출은 아래와 같이 구현해야 한다 */}
+      <button className='todo-item-delete-btn' onClick={()=>contentDelete(todo.id)}>🗑</button>
     </li>
   );
 };

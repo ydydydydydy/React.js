@@ -22,12 +22,39 @@ const TodoInput = () => {
     
     // 전개연산자를 사용해서 기존값을 복사하고 새로운 값을 추가
     setTodos([...todos, todo])
+
+    // input 요소의 내용 초기화
+    inputRef.current.value = '';
+    inputRef.current.focus();
+  }
+
+  const addTodo2 = (e) => {
+
+    // Enter키를 누른 조건
+    console.log(e.keyCode===13);
+
+    if(e.keyCode===13){
+
+      
+      let content = inputRef.current.value;
+      console.log(content);
+      
+      // 할 일에 관한 객체 생성
+      let todo = {id:uuid(), content: content, complete:false};
+      
+      // 전개연산자를 사용해서 기존값을 복사하고 새로운 값을 추가
+      setTodos([...todos, todo])
+      
+      // input 요소의 내용 초기화
+      inputRef.current.value = '';
+      inputRef.current.focus();
+    }
   }
 
   return (
     <div className='todo-inputbox'>
         <input type='text' className='todo-inputbox-input' placeholder='할 일을 입력해주세요.'
-            ref={inputRef}/>
+            ref={inputRef} onKeyUp={addTodo2}/>
         <input type='button' className='todo-inputbox-add-btn' value='등록'
         onClick={addTodo}/>
     </div>

@@ -11,10 +11,10 @@ const TodoHome = () => {
         <TodoInput/>
 
         {/* 해야할 목록 출력 */}
-        <TodoList/>
+        <TodoList title={"해야할 일"} complete={false}/>
 
         {/* 완료된 목록 출력 */}
-        <TodoList/>
+        <TodoList title={"완료된 일"} complete={true}/>
 
     </div>
   )
