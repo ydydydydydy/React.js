@@ -25,7 +25,7 @@ function App() {
     console.log("첫 렌더링 완료!");
     console.log("num1의 값:", num1);
     console.log("num2의 값:", num2);
-  },[num1, num2])
+  },[])
 
   // // Update: state가 변경되었을 때 호출되는 시점
   // // 구현방법: useEffect(()=>{실행할 로직 작성}, [변화를 감지할 state])
