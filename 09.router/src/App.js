@@ -6,6 +6,8 @@ import Product from './pages/Product';
 import { useState } from 'react';
 import Mypage from './pages/Mypage';
 import Login from './pages/Login';
+import ProductDetail from './pages/ProductDetail';
+import ProductDetail2 from './pages/ProductDetail2';
 
 function App() {
 
@@ -32,6 +34,12 @@ function App() {
 
         {/* Product 페이지로 이동하는 Route 컴포넌트 생성해보기! */}
         <Route path='/product' element={<Product/>} />
+
+        {/* useParams()를 사용할 때 아래와 같이 URL에 변수명 설정 */}
+        <Route path='/product/:pro_no/:cate' element={<ProductDetail/>}/>
+
+        {/* useSearchParams()를 사용할 때는 경로만 설정 */}
+        <Route path='/productDetail2' element={<ProductDetail2/>}/>
 
         {/* 
           /mypage 요청이 들어왔을 때, PrivateRoute에서 로그인 상태를 체크하고
