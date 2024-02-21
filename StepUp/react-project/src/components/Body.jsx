@@ -9,6 +9,7 @@ import MyPage from "./MyPage";
 import MemberList from "./MemberList";
 import Delete from "./Delete";
 import { Route, Routes } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
 const Body = () => {
   return (
@@ -16,7 +17,7 @@ const Body = () => {
       <Card>
         {/* Application의 Header */}
         <Header />
-
+        <Sidebar />
         {/* Application의 Main Content */}
         <Card.Body>
           {/* 

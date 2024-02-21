@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import axios from '../axios'
-import { useNavigate } from "react-router-dom";
-
 
 /*
   [회원가입 기능 구현]
@@ -41,19 +39,18 @@ const Join = () => {
   const nameRef = useRef();
   const heightRef = useRef();
   const weightRef = useRef();
-  const birthdateRef = useRef(); // 생년월일 추가
+  const birthdateRef = useRef();
 
   // 사용자의 정보를 저장하는 state
   const [userData, setUserData] = useState({});
   const [text, setText] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);  // 비밀번호 일치 여부 상태 추가
   
-  const navigate = useNavigate();
 /* 입력된 값이 숫자이거나 백스페이스키인지 확인하는 함수 */
 const handleKeyPress = (event) => {
   const charCode = event.which ? event.which : event.keyCode;
-  // 숫자, 소수점, 백스페이스 키 이외의 입력은 막습니다.
-  if ((charCode < 48 || charCode > 57) && charCode !== 46 && charCode !== 8) {
+  // 숫자, 소수점, 백스페이스(46), Tap(9) 키 이외의 입력은 막습니다.
+  if ((charCode < 48 || charCode > 57) && charCode !== 46 && charCode !== 8 && (event.keyCode === 9 || event.which === 9)) {
     event.preventDefault();
   }
 };
@@ -64,12 +61,6 @@ const handleKeyPress = (event) => {
   
   // 숫자와 소수점 이외의 문자는 제거
   value = value.replace(/[^\d.]/g, '');
-  
-  // // 소수점 이하 두 자리까지만 입력되도록 합니다.
-  // const parts = value.split('.');
-  // if (parts[1] && parts[1].length > 2) {
-  //   value = parts[0] + '.' + parts[1].slice(0, 2);
-  // }
   
   event.target.value = value;
 };
@@ -91,46 +82,20 @@ const handleKeyPress = (event) => {
     setPasswordMatch(pwRef.current.value === pw2Ref.current.value);
   };
 
-  /* 회원가입 기능을 하는 handleJoin 함수 구현 */
   const handleJoin = (e) => {
-      axios
-        .post('/user/join', {
-          id:idRef.current.value,
-          pw:pwRef.current.value,
-          name:nameRef.current.value,
-          height:heightRef.current.value,
-          weight:weightRef.current.value,
-          birthdate:birthdateRef.current.value
-        })
-        .then((res)=>{
-          if(res.data.result === 'success'){
-            JSON.stringify({
-              id:idRef.current.value,
-              pw:pwRef.current.value,
-              name:nameRef.current.value,
-              height:heightRef.current.value,
-              weight:weightRef.current.value,
-              birthdate:birthdateRef.current.value
-            });
-            alert('회원가입 완료!');
-
-            navigate('/main');
-          }
-        })
     // 기본 이벤트 동작을 막는 함수
-    // e.preventDefault();
-    // console.log(idRef.current.value, pwRef.current.value);
+    e.preventDefault();
+    console.log(idRef.current.value, pwRef.current.value);
 
-    // setUserData({
-    //   id: idRef.current.value,
-    //   pw: pwRef.current.value,
-    //   name: nameRef.current.value,
-    //   height: heightRef.current.value,
-    //   weight: weightRef.current.value,
-    //   birthdate: birthdateRef.current.value
-    // });
-    
-  };
+    setUserData({
+      id:idRef.current.value,
+      pw:pwRef.current.value,
+      name:nameRef.current.value,
+      height:heightRef.current.value,
+      weight:weightRef.current.value,
+      birthdate:birthdateRef.current.value
+    });
+  }
 
   /*
     node.js 서버로 회원가입 정보를 보내는 useEffect 구현
@@ -142,17 +107,21 @@ const handleKeyPress = (event) => {
     if (userData.id !== undefined) {
       if (pwRef.current.value === pw2Ref.current.value) {
         axios
-        .post('/user/join', { userData: userData })
+        .post('/user/join', {
+          id:idRef.current.value,
+          pw:pwRef.current.value,
+          name:nameRef.current.value,
+          height:heightRef.current.value,
+          weight:weightRef.current.value,
+          birthdate:birthdateRef.current.value
+         })
+        
         .then((res) => {
           console.log('요청성공', res.data);
 
-          if (res.data.msg === 'success') {
-            window.alert('환영합니다~!');
+            window.alert('회원가입 완료!');
             window.location.href = '/main';
-          } else {
-            window.alert('다시 한 번 확인해주세요...');
-            window.location.href = './join';
-          }
+          
         });
       }
     }
