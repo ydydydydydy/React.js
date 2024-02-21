@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import axios from '../axios'
-
+import { useNavigate } from "react-router-dom";
 
 
 /*
@@ -31,8 +31,8 @@ import axios from '../axios'
     - 고유갑(uniq)라면 -> '※ 사용 가능한 아이디입니다.' 출력 (글자색:초록)
     * 출력은 '중복체크'버튼 아래 <span>요소에 출력
     * 글자색과 내용은 각각 color, text state로 관리
-
 */
+
 const Join = () => {
   // useRef 초기화
   const idRef = useRef();
@@ -42,13 +42,13 @@ const Join = () => {
   const heightRef = useRef();
   const weightRef = useRef();
   const birthdateRef = useRef(); // 생년월일 추가
-  const joined_atRef = useRef(); // 가입일 추가
 
   // 사용자의 정보를 저장하는 state
   const [userData, setUserData] = useState({});
   const [text, setText] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);  // 비밀번호 일치 여부 상태 추가
-
+  
+  const navigate = useNavigate();
 /* 입력된 값이 숫자이거나 백스페이스키인지 확인하는 함수 */
 const handleKeyPress = (event) => {
   const charCode = event.which ? event.which : event.keyCode;
@@ -76,7 +76,9 @@ const handleKeyPress = (event) => {
 
   /* ID의 중복체크를 해주는 checkId 함수 구현 */
   const checkId = () => {
-    axios.post('/user/checkId', { id: idRef.current.value }).then((res) => {
+    axios
+        .post('/user/checkId', { id: idRef.current.value })
+        .then((res) => {
       if (res.data.result === 'dup') {
         setText('※ 사용 불가능한 아이디입니다. 다른 아이디를 입력해주세요.');
       } else {
@@ -91,18 +93,43 @@ const handleKeyPress = (event) => {
 
   /* 회원가입 기능을 하는 handleJoin 함수 구현 */
   const handleJoin = (e) => {
-    // 기본 이벤트 동작을 막는 함수
-    e.preventDefault();
-    console.log(idRef.current.value, pwRef.current.value);
+      axios
+        .post('/user/join', {
+          id:idRef.current.value,
+          pw:pwRef.current.value,
+          name:nameRef.current.value,
+          height:heightRef.current.value,
+          weight:weightRef.current.value,
+          birthdate:birthdateRef.current.value
+        })
+        .then((res)=>{
+          if(res.data.result === 'success'){
+            JSON.stringify({
+              id:idRef.current.value,
+              pw:pwRef.current.value,
+              name:nameRef.current.value,
+              height:heightRef.current.value,
+              weight:weightRef.current.value,
+              birthdate:birthdateRef.current.value
+            });
+            alert('회원가입 완료!');
 
-    setUserData({
-      id: idRef.current.value,
-      pw: pwRef.current.value,
-      name: nameRef.current.value,
-      height: heightRef.current.value,
-      weight: weightRef.current.value,
-      birthdate: birthdateRef.current.value
-    });
+            navigate('/main');
+          }
+        })
+    // 기본 이벤트 동작을 막는 함수
+    // e.preventDefault();
+    // console.log(idRef.current.value, pwRef.current.value);
+
+    // setUserData({
+    //   id: idRef.current.value,
+    //   pw: pwRef.current.value,
+    //   name: nameRef.current.value,
+    //   height: heightRef.current.value,
+    //   weight: weightRef.current.value,
+    //   birthdate: birthdateRef.current.value
+    // });
+    
   };
 
   /*
@@ -114,7 +141,9 @@ const handleKeyPress = (event) => {
   useEffect(() => {
     if (userData.id !== undefined) {
       if (pwRef.current.value === pw2Ref.current.value) {
-        axios.post('/user/join', { userData: userData }).then((res) => {
+        axios
+        .post('/user/join', { userData: userData })
+        .then((res) => {
           console.log('요청성공', res.data);
 
           if (res.data.msg === 'success') {

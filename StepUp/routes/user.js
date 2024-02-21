@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 const conn = require('../config/database');
 
-// 회원가입 시, ID 중복체크
+// // 회원가입 시, ID 중복체크
 router.post('/checkId', (req, res) => {
     console.log('ID중복체크 요청...', req.body);
 
@@ -14,8 +14,8 @@ router.post('/checkId', (req, res) => {
     const { id } = req.body;
 
     // DB 연동: 전송된 ID가 이미 데이터베이스에 존재하는지 확인
-    const sql = 'SELECT user_id FROM users WHERE user_id = ?';
-    conn.query(sql, [id], (err, rows) => {
+    const userIdCheck = 'SELECT user_id FROM users WHERE user_id = ?';
+    conn.query(userIdCheck, [id], (err, rows) => {
         if (err) {
             console.error('ID 중복 체크 오류:', err);
             res.json({ result: 'error' });
@@ -38,19 +38,16 @@ router.post('/join',(req,res)=>{
     // DB 연동코드추가
     const {id, pw, name, height, weight, birthdate} = req.body;
     const joined_at = new Date(); // 가입일 추가
-    const sql = `INSERT INTO users (user_id, user_pw, user_name, user_height, user_weight, user_birthdate, joined_at) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const values = [id, pw, name, height, weight, birthdate, joined_at];
+    const userJoin = 'insert into users (user_id, user_pw, user_name, user_height, user_weight, user_birthdate, joined_at) values (?, ?, ?, ?, ?, ?, ?)';
 
-    conn.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('회원가입 오류:', err);
-            res.json({ msg: 'error' });
-        } else {
-            console.log('회원가입 성공:', result);
-            res.json({ msg: 'success' });
+    conn.query(userJoin, [id, pw, name, height, weight, birthdate, joined_at], (err, rows) => {
+        if(rows){
+            console.log('회원가입 완료');
+            res.json({result:'success'});
+        }else{
+            console.log('회원가입 실패');
         }
-    });
+    })
 });
 
 // 로그인 라우터
