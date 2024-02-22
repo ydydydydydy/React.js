@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Nav, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   Navbar,
   Collapse,
@@ -48,39 +49,82 @@ const Header = () => {
   }
 
   return (
-    <Card.Body>
-      <Nav variant="tabs">
-        <Link to="/main">
-          <Button variant="light">Main</Button>
-        </Link>
+    <Navbar color="white" light expand="md" className="fix-header">
+      <div className="d-flex align-items-center">
+        <div className="d-lg-block d-none me-5 pe-3">
+          <Logo />
+        </div>
+        <NavbarBrand href="/">
+          <LogoWhite className="d-lg-none" />
+        </NavbarBrand>
+        <Button
+          color="primary"
+          className=" d-lg-none"
+          onClick={() => showMobilemenu()}
+        >
+          <i className="bi bi-list"></i>
+        </Button>
+      </div>
+      <div className="hstack gap-2">
+        <Button
+          color="primary"
+          size="sm"
+          className="d-sm-block d-md-none"
+          onClick={Handletoggle}
+        >
+          {isOpen ? (
+            <i className="bi bi-x"></i>
+          ) : (
+            <i className="bi bi-three-dots-vertical"></i>
+          )}
+        </Button>
+      </div>
 
-        {/* 비회원 권한 */}
-        <Link to="/join">
-          <Button variant="light">회원가입</Button>
-        </Link>
-        <Link to="/login">
-          <Button variant="light">로그인</Button>
-        </Link>
-
-        {/* 회원 권한 */}
-        <Link to="/mypage">
-          <Button variant="light">마이페이지</Button>
-        </Link>
-        <Link to="/list">
-          <Button variant="light">회원검색</Button>
-        </Link>
-        <Link to="/delete">
-          <Button variant="light">회원탈퇴</Button>
-        </Link>
-        {/* Case 1) 서버에 세션 저장한 경우 = link  */}
-        {/* <Link to='/user/logout'> */}
-
-        {/* Case 2) 브라우저에 세션 저장한 경우   */}
-        <Button variant="light" onClick={handleLogout}>로그아웃</Button>
-
-        {/* </Link> */}
-      </Nav>
-    </Card.Body>
+      <Collapse navbar isOpen={isOpen}>
+        <Nav className="me-auto" navbar>
+          <NavItem>
+            <Link to="/main" className="nav-link">
+              main
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/join" className="nav-link">
+              회원가입
+            </Link>
+          </NavItem>
+          <UncontrolledDropdown inNavbar nav>
+            <DropdownToggle caret nav>
+              DD Menu
+            </DropdownToggle>
+            <DropdownMenu end>
+              <DropdownItem>Option 1</DropdownItem>
+              <DropdownItem>Option 2</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem>Reset</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </Nav>
+        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <DropdownToggle color="transparent">
+            <img
+              src={user1}
+              alt="profile"
+              className="rounded-circle"
+              width="30"
+            ></img>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem header>Info</DropdownItem>
+            <DropdownItem>My Account</DropdownItem>
+            <DropdownItem>Edit Profile</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem>My Balance</DropdownItem>
+            <DropdownItem>Inbox</DropdownItem>
+            <DropdownItem>Logout</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </Collapse>
+    </Navbar>
   );
 };
 
